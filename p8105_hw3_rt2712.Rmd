@@ -1,0 +1,23 @@
+---
+title: "p8105_hw3_rt2712"
+author: "Rachel Tsong"
+date: "15 October 2018"
+output: github_document
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
