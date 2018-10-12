@@ -58,8 +58,7 @@ brfss_data %>%
 
 The spaghetti plot above shows the number of different counties that were surveyed by the BRFSS from 2002 to 2010 in each state. Since all 50 states and DC are representd in the data set, it is hard to distinguish between the different states in the plot by color. However, there isn't really a better way to distinguish between the states, so while the figure looks pretty nice, it is not necessarily a good figure to draw conclusions from.
 
-**Table showing mean and standard deviation of the proportion of “Excellent” responses across locations in NY State (2002, 2006, and 2010)**
-
+**Mean and standard deviation of the proportion of “Excellent” responses across locations in NY State (2002, 2006, and 2010)**
 ```{r}
 brfss_data %>%
   filter(state == "NY", response == "Excellent", year == 2002 | year == 2006 | year == 2010) %>%
@@ -69,7 +68,96 @@ brfss_data %>%
 
 ```
 
+From the summary table above, it appears as if the mean number of respondents who consider themselves to be in "Excellent" health was about the same in 2002, 2006, and 2010 (about 22-24% of respondents). Looking at the standard deviations, it appears as if there was the highest variation in the proportion of excellent responses by county in NY in 2002 and the lowest variation in 2010. 
 
+**Five-panel plot showing the distribution of state-level averages over time for each response category**
+```{r}
+brfss_data %>%
+  group_by(year, state, response) %>%
+  summarize(mean = mean(proportion_responses)) %>% 
+  ggplot(aes(x = year, y = mean)) + 
+    geom_point() + 
+    facet_grid(~response) +
+    labs(x = "Year", y = "Average Proportion of Responses", title = "Average Proportion of Responses Over Time") +
+    theme(axis.text.x = element_text(angle = 90))
+    
+    
+  
+```
+
+In this 5 panel plot, we can see how the proportion of responses for each state varies across time. Also, since we plot of a point for each state, we can get an idea of how varied the data are for within each category.
+
+# Problem 2
+
+## Step 1
+
+```{r}
+data("instacart")
+  
+```
+
+**Dataset description**  
+This dataset contains information about customer orders from Instacart, a grocery delivery company. First, there is some information about the customer including the customer ID, days since last Instacart order, number of times they've ordered from Instacart, and the time the customer placed the order. Additionally, there is information about the contents of the order including the product name and where the product can be found in the store (department and aisle). For example, the product "Bulgarian yogurt" is identified by a numerical product ID, and it is in the "yogurt" aisle in the "dairy & eggs" department. The aisle and deparment is also identified by a numerical ID. There are 1,384,617 observations of 15 variables. 
+
+## Step 2
+
+Answer questions
+
+**How many aisles are there, and which aisles are the most items ordered from**
+```{r}
+instacart %>% 
+  group_by(aisle) %>%
+  summarize(n = n()) %>%
+  arrange(-n) %>%
+  head() %>%
+  knitr::kable()
+```
+
+There are 134 aisles, and the most ordered from aisles are shown in the table above.
+
+**Plot that shows the number of items ordered in each aisle. Order aisles sensibly, and organize your plot so others can read it**
+
+```{r}
+plot = instacart %>%
+  group_by(department, aisle) %>%
+  summarize (n = n()) %>%
+  arrange(department, -n)
+
+ggplot(plot, aes(x = aisle, y = n, color = department)) +
+  geom_bar(stat = "identity")
+
+## scale_x_continuous(breaks = seq(first break, last number, count by))
+ 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+ny_noaa = janitor::clean_names(ny_noaa)
+
+tidy_ny_noaa = separate(ny_noaa, date, into = c("year", "month", "day"), sep = "-") %>%
+  mutate(year = as.numeric(year), 
+         month = as.numeric(month), 
+         day = as.numeric(day), 
+         tmax = as.numeric(tmax)/10, 
+         tmin = as.numeric(tmin)/10,
+         prcp = prcp/10
+         )
+```
 
 
 
