@@ -51,6 +51,7 @@ brfss_data %>%
   group_by(year, state) %>%
   summarize(n_counties = n_distinct(county)) %>%
   ggplot(aes(x = year, y = n_counties, color = state)) + 
+<<<<<<< HEAD
     labs(x = "Year", y = "Number of Counties", color = "State", title = "Number of Counties Surveyed by BRFSS by State (2002 - 2010)") +
     geom_line(size = 1)
 
@@ -59,11 +60,23 @@ brfss_data %>%
 The spaghetti plot above shows the number of different counties that were surveyed by the BRFSS from 2002 to 2010 in each state. Since all 50 states and DC are represented in the data set, it is hard to distinguish between the different states in the plot by color. For example, in 2007 and 2010 one state had significantly more locations surveyed, but it is hard to tell which state this is (Delaware? Florida?). However, I couldn't really figure out a better way to distinguish between the states.
 
 **Mean and standard deviation of the proportion of “Excellent” responses across locations in NY State (2002, 2006, and 2010)**
+=======
+  labs(x = "Year", y = "Number of Counties", color = "State") +
+  geom_line(size = 1)
+
+```
+
+The spaghetti plot above shows the number of different counties that were surveyed by the BRFSS from 2002 to 2010 in each state. Since all 50 states and DC are representd in the data set, it is hard to distinguish between the different states in the plot by color. However, there isn't really a better way to distinguish between the states, so while the figure looks pretty nice, it is not necessarily a good figure to draw conclusions from.
+
+**Table showing mean and standard deviation of the proportion of “Excellent” responses across locations in NY State (2002, 2006, and 2010)**
+
+>>>>>>> 92e8a716bebb98a634dc27d0d9dc3fdd30c2a00c
 ```{r}
 brfss_data %>%
   filter(state == "NY", response == "Excellent", year == 2002 | year == 2006 | year == 2010) %>%
   group_by(year) %>%
   summarize(mean_excellent = mean(proportion_responses), sd_excellent = sd(proportion_responses)) %>%
+<<<<<<< HEAD
   knitr::kable(digits = 1)
 
 ```
@@ -269,6 +282,13 @@ grid.arrange(temp_plot, snow_plot, nrow = 2, top = "New York Temperature and Sno
 The plots above show New York temperature and snowfall data. In the temperature plot, average temperature minima and maxima are positively correlated as expected. The yellow/green areas show that most of the time, these temperatures are highly linearly correlated. Rarer temperature events are in the dark blue areas of the plot. Many of the outliers are more likely errors instead of instances of extreme temperatures.
 
 The snowfall data plot shows that the amount snowfall each year in New York is consistent from year to year. I chose to display these data as a violin plot to note an interesting feature: the bulges in the graph at 1.3, 2.5, 5.0, and 7.5 mm. As noted before, these values correspond to 1/2, 1, 2, and 3 inches. Therefore, it can be concluded that when reporting the amount of snowfall, the data collectors rounded to the nearest inch for snowfall $\geq 1$ inch and the nearest 1/2 inch for snowfall $<1$ inch.
+=======
+  knitr::kable()
+
+```
+
+
+>>>>>>> 92e8a716bebb98a634dc27d0d9dc3fdd30c2a00c
 
 
 
